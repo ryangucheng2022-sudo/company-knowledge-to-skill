@@ -52,6 +52,25 @@ A packaged Skill is not automatically reliable: it still needs data permissions,
 > The goal: knowledge no longer lives only in documents and in people's heads, but becomes working capability that the organization and its AIs can keep reusing.
 
 
+## Method at a glance
+
+| Stage | Input | Output | Human checkpoint |
+|---|---|---|---|
+| Collect | Scope + source inventory | Independent collector outputs | Scope and sensitivity boundary approved |
+| Normalize | Collector outputs | Canonical records with provenance | Spot-check records against sources |
+| Reconcile | Records from all collectors | Deduplicated records + conflict log | Batch decision list signed off |
+| Specify | Reconciled records | Terminology, rules, expression and correction guides | Ratings reviewed (anti-inflation caps applied) |
+| Generate | Validated records | Knowledge package / downstream Skill with a known-gaps section | Hygiene gate: 100% re-rated, no placeholders |
+| Evaluate | Package + cases | Behavior results (sufficient / partial / missing, veto failures) | Gaps accepted or sent back |
+| Maintain | Errors observed in use | Register updates + new regression cases | Corrections batched, not drip-fed |
+
+## Design principles
+
+- **Independent collectors first.** Diversity before consensus: collectors work from the same contract without seeing each other. Agreement is evidence; disagreement is signal — both are lost if collection starts from one draft.
+- **Baseline before merge.** One source is designated the baseline; nothing overrides it silently, and superseded versions are demoted and kept, never deleted.
+- **Ratings are earned.** A source's self-rating is a claim, not a fact. Discussion-stage content is capped until formal evidence supports it, and every rating records its basis.
+- **Packages are build artifacts.** The register is the single source of truth; a generated package is regenerated from it, never hand-patched — and it ships an honest list of what it does not cover.
+
 ## Included
 
 - `SKILL.md` — entrypoint and stage routing
