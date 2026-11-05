@@ -1,0 +1,4 @@
+interface:
+  display_name: "Company Knowledge to Skill"
+  short_description: "Turn multi-AI company knowledge into a tested reusable Skill"
+  default_prompt: "Use $company-knowledge-to-skill to collect, reconcile, validate, and package organization-specific knowledge from multiple AI inputs."

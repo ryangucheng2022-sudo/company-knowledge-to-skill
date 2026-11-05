@@ -1,0 +1,20 @@
+version: 1
+project:
+  name: "[PROJECT_NAME]"
+  organization: "[ORGANIZATION]"
+  scope: "[IN_SCOPE_TOPICS]"
+  audience: "[AUDIENCE]"
+  export_destination: "[DESTINATION]"
+sources:
+  - source_id: "SRC-0001"
+    type: "conversation | file | system | human_review"
+    locator: "[PATH_OR_REFERENCE]"
+    owner: "[ROLE_OR_NULL]"
+    observed_at: "YYYY-MM-DD or unknown"
+    sensitivity: "public | internal | confidential | restricted"
+    access_note: "[ACCESS_NOTE]"
+collectors:
+  - collector_id: "COL-0001"
+    model_or_person: "[MODEL_OR_PERSON]"
+    prompt_version: "[PROMPT_VERSION]"
+    run_at: "YYYY-MM-DD"

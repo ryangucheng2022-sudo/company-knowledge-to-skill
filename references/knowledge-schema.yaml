@@ -1,0 +1,32 @@
+version: 1
+record:
+  required:
+    - record_id
+    - domain
+    - claim
+    - status
+    - confidence
+    - sensitivity
+    - provenance
+  fields:
+    record_id: "Stable local ID, e.g. K-0001"
+    domain: "terminology | management_rule | process | expression | ai_correction | confirmed_phrase"
+    claim: "Normalized claim, one meaning per record"
+    original_wording: "Quoted wording or null"
+    aliases: "List of organization-specific aliases"
+    scope: "Business unit, geography, audience, or null"
+    effective_from: "ISO date or null"
+    effective_to: "ISO date or null"
+    status: "confirmed | repeated | proposed | inferred | unknown | deprecated"
+    confidence: "high | medium | low"
+    sensitivity: "public | internal | confidential | restricted"
+    provenance:
+      source_id: "Conversation, file, message, or collector ID"
+      source_type: "formal_document | confirmed_instruction | conversation | ai_output | inference | other"
+      locator: "Page, turn, message, or section when available"
+      observed_at: "ISO date or unknown"
+    owner: "Responsible role or null"
+    exceptions: "List of explicit exceptions"
+    related_ids: "Related record IDs"
+    conflict_group: "Shared ID when claims are incompatible"
+    notes: "Short rationale, uncertainty, or review instruction"

@@ -1,0 +1,23 @@
+version: 1
+cases:
+  - id: unsupported-certainty
+    input: "An AI says a discussion item is an approved company rule."
+    expected: "status remains proposed or unknown, with a review flag"
+  - id: privacy-leak
+    input: "A collector includes an employee name, customer name, and exact unreleased revenue."
+    expected: "sensitivity is confidential or restricted and generic export redacts or abstracts values"
+  - id: synonym-merge
+    input: "Two collectors use different aliases for the same scoped process."
+    expected: "merge_alias preserves both original terms and provenance"
+  - id: temporal-drift
+    input: "The same metric has two rules in different years."
+    expected: "records remain separate by effective period"
+  - id: multi-ai-disagreement
+    input: "Two collectors provide incompatible definitions with no authority signal."
+    expected: "conflict group and human-review question are created"
+  - id: missing-data
+    input: "A source omits the owner and calculation basis."
+    expected: "fields remain null or unknown, never estimated"
+  - id: ai-style-correction
+    input: "A vague slogan is changed to a concrete action and outcome."
+    expected: "correction records the before/after and rationale without banning valid domain terms"

@@ -1,0 +1,31 @@
+version: 1
+project:
+  name: "Meridian knowledge package (worked example)"
+  organization: "Meridian Office Furniture — FICTIONAL company created for this example"
+  scope: "Meeting terminology, two operating rules, one expression correction"
+  audience: "Readers evaluating this Skill"
+  export_destination: "generic (public example)"
+sources:
+  - source_id: "SRC-A"
+    type: "ai_output"
+    locator: "collectors/collector-a.md in this folder"
+    owner: null
+    observed_at: "2026-11-05"
+    sensitivity: "internal"
+    access_note: "Fictional collector output written for this example"
+  - source_id: "SRC-B"
+    type: "ai_output"
+    locator: "collectors/collector-b.md in this folder"
+    owner: null
+    observed_at: "2026-11-05"
+    sensitivity: "internal"
+    access_note: "Fictional collector output written for this example; contains one deliberate privacy leak that normalization must abstract"
+collectors:
+  - collector_id: "COL-A"
+    model_or_person: "Collector A (fictional)"
+    prompt_version: "collection-prompts.md v1"
+    run_at: "2026-11-05"
+  - collector_id: "COL-B"
+    model_or_person: "Collector B (fictional)"
+    prompt_version: "collection-prompts.md v1"
+    run_at: "2026-11-05"
