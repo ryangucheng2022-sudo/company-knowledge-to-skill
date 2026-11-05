@@ -1,0 +1,22 @@
+# Copy to .github/workflows/ci.yml to enable (see ci/README.md).
+name: ci
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Worked example validates (JSONL, generic)
+        run: python scripts/validate_knowledge.py examples/meridian-office-furniture/records.jsonl
+      - name: Worked example validates (JSONL, internal)
+        run: python scripts/validate_knowledge.py examples/meridian-office-furniture/records.jsonl --export internal
+      - name: Worked example validates (YAML input)
+        run: python scripts/validate_knowledge.py examples/meridian-office-furniture/records.yaml
+      - name: Package consistency (drift) check
+        run: python scripts/check_consistency.py
+      - name: Negative case (duplicate + empty claims must fail)
+        run: "! python scripts/validate_knowledge.py ci/dirty.jsonl --scan-values"
