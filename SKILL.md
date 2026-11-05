@@ -19,6 +19,7 @@ Select the smallest mode that satisfies the request.
 - **Specify** — extract terminology, management rules, expression patterns, AI-correction rules, and confirmed phrases.
 - **Generate** — produce a company-specific knowledge package or a downstream Skill from validated records.
 - **Evaluate** — run the evaluation cases and report failures, unresolved conflicts, privacy leaks, or unsupported certainty.
+- **Maintain** — run the continuous correction loop: capture usage errors, triage by root cause, write back fixes, and promote corrected errors into regression cases.
 - **Full pipeline** — run the stages in order, allowing a human checkpoint between stages.
 
 ## Required behavior
@@ -57,6 +58,7 @@ Read only the references needed for the current mode.
 - Behavior evaluation protocol (independent executor, citation-required): [references/evaluation-protocol.md](references/evaluation-protocol.md)
 - Failure patterns observed in a real deployment, with detection checks: [references/field-failure-patterns.md](references/field-failure-patterns.md)
 - Batch decision list and persistent unresolved-items ledger templates: [templates/decision-list.md](templates/decision-list.md)
+- Continuous correction loop (usage errors -> triage -> write-back -> regression cases): [references/correction-loop.md](references/correction-loop.md); log template: [templates/correction-log.md](templates/correction-log.md)
 - Worked example on a fictional company (full pipeline: collect → normalize → reconcile → validate): [examples/meridian-office-furniture/](examples/meridian-office-furniture/)
 
 ## Quality gate

@@ -4,6 +4,54 @@ English | [简体中文](README.zh-CN.md)
 
 A generic, reusable Skill for collecting organization-specific knowledge from multiple AI or human inputs, reconciling differences, applying privacy controls, generating a downstream Skill, and testing the result.
 
+## Why this exists
+
+Most of an organization's valuable knowledge never becomes an organizational capability: it lives in employees' experience, day-to-day work, and past decisions — scattered across people, AI chats, and working documents. This Skill is a pipeline for turning that tacit knowledge into AI capability that is **reusable, verifiable, and continuously improvable**.
+
+It addresses three core problems of enterprise knowledge:
+
+- **Scattered** — knowledge sits in heads, AI memories, files, and systems.
+- **Distorted** — inconsistent definitions, version conflicts, and misunderstood context corrupt it in transit.
+- **Not executable** — documents describe knowledge but do not standardize how work gets done.
+
+A traditional knowledge base answers "where do I find this knowledge?" A Skill answers the next question: "how do I do this work, following that knowledge?" A knowledge base can tell an AI what a term means; a business Skill specifies how to select the data, apply the rules, judge anomalies, and verify the result.
+
+## Where it fits
+
+| Capability | What it solves |
+|---|---|
+| Knowledge base | Store, classify, and find knowledge |
+| RAG | Retrieve relevant knowledge while answering |
+| Agent | Call tools and execute tasks toward a goal |
+| **Knowledge-to-Skill (this project)** | Distill scattered knowledge into standards, procedures, judgment rules, and testable Skills |
+
+It complements rather than replaces the other three: it is the knowledge-engineering layer they are missing.
+
+## Typical scenarios
+
+1. **Standardizing enterprise AI use** — employees already use different AIs with inconsistent terminology and style; one collected, normalized knowledge layer gives them a shared standard.
+2. **Capturing expert know-how** — how an expert analyzes, judges anomalies, and handles exceptions, converted from personal experience into a repeatable method.
+3. **Onboarding and role handover** — not just what the policy says, but the internal terms, real workflows, historical judgments, and responsibility boundaries a newcomer actually needs.
+4. **Building professional business Agents** — finance, sales-project, or supply-chain Agents need the company's own metric definitions, business rules, and judgment standards, not generic reasoning alone.
+5. **Post-merger integration** — the same term with different definitions across companies or divisions; surface the conflicts, unify what must be unified, keep legitimate differences.
+6. **Migrating between AI platforms** — knowledge accumulated in one tool (ChatGPT, Muse, Grok, …) becomes a model-independent asset instead of staying locked in one platform's memory.
+
+## Value levels
+
+| Level | Value | Measurable by |
+|---|---|---|
+| L1 Efficiency | Less time explaining terms, revising drafts, hunting documents | Task time, rework count |
+| L2 Quality | Fewer terminology and factual errors | Term accuracy, major-error rate |
+| L3 Reuse | Expert methods used by more people and Agents | Skill reuse count, roles covered |
+| L4 Organizational capability | Less key-person dependency, more consistent execution | Onboarding time, handover success, process consistency |
+
+L1–L2 are verifiable quickly; L3–L4 are worth more and take longer to prove. A sensible validation order: (1) terminology and AI expression standards, (2) a professional role's analytical method, (3) role handover and knowledge inheritance.
+
+A packaged Skill is not automatically reliable: it still needs data permissions, tool connections, tests, and human oversight. And collecting employees' AI conversation history requires explicit authorization and data minimization — personal chats are not company assets by default.
+
+> The goal: knowledge no longer lives only in documents and in people's heads, but becomes working capability that the organization and its AIs can keep reusing.
+
+
 ## Included
 
 - `SKILL.md` — entrypoint and stage routing
@@ -15,7 +63,8 @@ A generic, reusable Skill for collecting organization-specific knowledge from mu
 - `references/evaluation-protocol.md` — behavior evaluation with an independent executor
 - `references/field-failure-patterns.md` — failure modes from a real deployment, with detection checks
 - `templates/decision-list.md` — batch decision list and persistent unresolved-items ledger
-- `templates/` — source inventory and knowledge-package outline
+- `templates/` — source inventory, knowledge-package outline, decision list, and correction log
+- `references/correction-loop.md` — continuous correction: usage errors to regression cases
 - `scripts/validate_knowledge.py` — JSON/JSONL structural validator
 - `agents/openai.yaml` — UI metadata
 

@@ -14,3 +14,4 @@ Static fixtures (evaluation-cases.yaml) verify that safeguards *exist*. This pro
 - After any register change that touches a case's topic: re-run that case.
 - After a decision round (write-back): re-run all conflict and version cases.
 - Before any export to a wider audience: re-run the privacy cases plus the pre-export value scan.
+- After each correction write-back batch: re-run the cases promoted from corrected errors (see correction-loop.md).
