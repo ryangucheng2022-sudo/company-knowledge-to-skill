@@ -29,4 +29,8 @@ record:
     exceptions: "List of explicit exceptions"
     related_ids: "Related record IDs"
     conflict_group: "Shared ID when claims are incompatible"
+    record_type: "term | rule | case | guideline | pending_item — how the record is used downstream; correction cases (wrong -> right pairs) are first-class records, not anecdotes"
+    status_basis: "Why this status/confidence was assigned: evidence pointer or decision ID and date. A source's self-rating alone is not a basis"
+    supersedes: "Record ID this record replaces after a decision, or null"
+    superseded_by: "Record ID that replaced this record, or null; superseded records are kept as deprecated, never deleted"
     notes: "Short rationale, uncertainty, or review instruction"

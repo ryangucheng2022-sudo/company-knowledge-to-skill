@@ -32,6 +32,8 @@ Select the smallest mode that satisfies the request.
 7. Apply privacy classification before export. Redact or abstract personal data, customer identifiers, financial details, unreleased strategy, credentials, and technical secrets unless the user explicitly supplies an authorized internal destination.
 8. Generate downstream instructions that are modular and source-backed. Keep generic method guidance in the Skill and company facts in references or a separate knowledge file.
 9. Run the supplied validator and evaluation cases. Report unresolved items and any assumptions in the final package README.
+10. Before Generate, pass the register hygiene gate: every record re-rated with a `status_basis` (no placeholder statuses), meta-records and empty claims removed, duplicates merged or grouped, classification fields actually varied (a single uniform value across all records means classification was not performed). See references/field-failure-patterns.md.
+11. Generate packages as build artifacts of the register: fix the register and regenerate, never hand-patch a generated copy. Ship a known-gaps section in every generated package, and treat sensitivity layers as separate files so an export removes files instead of editing content.
 
 ## Stage outputs
 
@@ -52,6 +54,9 @@ Read only the references needed for the current mode.
 - Privacy classification and export rules: [references/privacy-and-redaction.md](references/privacy-and-redaction.md)
 - Reusable templates for source inventory and knowledge outputs: [templates/](../templates/)
 - Evaluation cases and expected safeguards: [references/evaluation-cases.yaml](references/evaluation-cases.yaml)
+- Behavior evaluation protocol (independent executor, citation-required): [references/evaluation-protocol.md](references/evaluation-protocol.md)
+- Failure patterns observed in a real deployment, with detection checks: [references/field-failure-patterns.md](references/field-failure-patterns.md)
+- Batch decision list and persistent unresolved-items ledger templates: [templates/decision-list.md](templates/decision-list.md)
 - Worked example on a fictional company (full pipeline: collect → normalize → reconcile → validate): [examples/meridian-office-furniture/](examples/meridian-office-furniture/)
 
 ## Quality gate
@@ -65,3 +70,5 @@ Before delivery, verify that:
 - sensitivity labels are present and export rules were applied
 - the generated Skill has valid frontmatter, a discriminating description, and discoverable references
 - evaluation cases cover unsupported certainty, privacy leakage, synonym merging, temporal drift, and multi-AI disagreement
+- register hygiene gate passed: 100% of records re-rated with a recorded basis, no meta-records, no empty or placeholder claims
+- generated package carries a known-gaps section, and no hand-edits diverge it from the register

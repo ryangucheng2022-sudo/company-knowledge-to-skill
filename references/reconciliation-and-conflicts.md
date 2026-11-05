@@ -33,3 +33,19 @@ The canonical record keeps the most precise wording and appends provenance from 
 ## Review queue fields
 
 `conflict_group`, `record_ids`, `conflict_type`, `question_for_reviewer`, `evidence`, `proposed_resolution`, `reviewer`, `reviewed_at`, `decision`.
+
+## Baseline designation and the silent-override ban
+
+Before merging, designate one source as the **baseline** (normally the most recent formally confirmed material). All other sources are candidates against it. A claim in a non-baseline source must never silently replace a baseline claim — and no record may present itself as "the latest confirmed version" unless a decision record (who decided, when, on what evidence) backs that claim. Version claims without a decision record are treated as `pending_review`. Silent override is the single most damaging merge failure: the output looks complete while an approved position has been replaced by an unapproved one.
+
+## Anti-inflation re-rating
+
+A source's self-assigned status or confidence is a claim, not a fact. During reconciliation, re-rate every record against evidence, and record the basis in `status_basis`. Apply caps: content originating from discussion, proposal, or brainstorming material is capped at `repeated`/`proposed` no matter how the source labeled it, until independent formal evidence supports `confirmed`. A register in which every record still carries a placeholder status (e.g. all `unknown`, all unrated) has not been reconciled — do not proceed to generation.
+
+## Batch decision and write-back protocol
+
+Do not drip-feed conflicts to the decision-maker one at a time. Compile them into a single numbered **decision list** (template: `templates/decision-list.md`): for each item give the competing versions with provenance, the impact of leaving it undecided, the options, and a recommendation. After the decision round:
+
+1. Write the decision back into each affected record: new status, `status_basis` citing the decision ID and date.
+2. Demote superseded versions to `deprecated` and link them with `superseded_by`; never delete them. The trace is what prevents the old version from resurfacing as "confirmed" in a later merge.
+3. Close the corresponding entries in the persistent unresolved-items ledger (states: open → decided → closed), keeping the decision reference.

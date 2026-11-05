@@ -13,8 +13,14 @@ def load(path):
         return yaml.safe_load(text)
     try: return json.loads(text)
     except json.JSONDecodeError as exc: raise SystemExit(f"Input must be JSON, JSONL, or YAML: {exc}")
+import re
+PLACEHOLDERS = {"", "—", "——", "-", "tbd", "n/a", "none"}
+META_PATTERNS = [r"(?i)confidence (levels?|scale)", r"(?i)status (levels?|scale)", r"(?i)rating scale", r"(?i)\bA\s*[=|]\s*confirmed\b"]
+VALUE_PATTERNS = [r"\d+\.\d+\s*%", r"[$€¥£]\s?\d", r"\b\d{4,}[- ]?\d{4,}\b"]
+def norm_claim(r):
+    return re.sub(r"\s+", " ", (r.get("claim") or "").strip().lower())
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("input"); ap.add_argument("--export", choices=["generic", "internal"], default="generic"); args = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("input"); ap.add_argument("--export", choices=["generic", "internal"], default="generic"); ap.add_argument("--scan-values", action="store_true", help="heuristically scan exportable records for figures/identifiers that may be sensitive"); args = ap.parse_args()
     data = load(args.input); records = data.get("records", data) if isinstance(data, dict) else data
     if not isinstance(records, list): print("ERROR: expected a list of records", file=sys.stderr); return 2
     errors, warnings, ids = [], [], set()
@@ -29,6 +35,23 @@ def main():
         if r.get("sensitivity") in {"confidential", "restricted"} and args.export == "generic": warnings.append(f"{i}: sensitive record requires abstract/redact/exclude before generic export")
         if r.get("status") in {"proposed", "inferred", "unknown"} and r.get("confidence") == "high": warnings.append(f"{i}: review high confidence on non-confirmed status")
         if not r.get("provenance", {}).get("source_id"): errors.append(f"{i}: provenance.source_id is required")
+    # --- register hygiene checks (v1.1) ---
+    claims = {}
+    for i, r in enumerate(records, 1):
+        claim = (r.get("claim") or "").strip()
+        if claim.lower() in PLACEHOLDERS: errors.append(f"{i}: empty or placeholder claim")
+        nc = norm_claim(r)
+        if nc:
+            if nc in claims: warnings.append(f"{i}: duplicate claim also at record {claims[nc]} — merge or group as conflict")
+            claims.setdefault(nc, i)
+        if any(re.search(pat, claim) for pat in META_PATTERNS): warnings.append(f"{i}: possible meta-record (defines the schema/scale itself, not company knowledge)")
+        if args.scan_values and r.get("sensitivity") in {"public", "internal"} and any(re.search(pat, claim) for pat in VALUE_PATTERNS):
+            warnings.append(f"{i}: possible sensitive figure/identifier in an exportable record — verify before release")
+    for field in ("status", "confidence", "sensitivity", "notes"):
+        vals = [str(r.get(field)) for r in records if r.get(field) not in (None, "")]
+        if len(vals) >= 5 and len(set(vals)) == 1: warnings.append(f"uniform {field}={vals[0]!r} on all {len(vals)} populated records — classification may not have been performed")
+    rated = sum(1 for r in records if r.get("status") not in (None, "", "unknown"))
+    print(f"rated_coverage={rated}/{len(records)}")
     print(f"records={len(records)}"); print(f"errors={len(errors)}"); print(f"warnings={len(warnings)}")
     for item in errors: print("ERROR", item)
     for item in warnings: print("WARN", item)

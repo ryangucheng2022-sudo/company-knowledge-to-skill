@@ -12,6 +12,9 @@
 - `references/reconciliation-and-conflicts.md` — 去重与冲突处理规则
 - `references/privacy-and-redaction.md` — 敏感等级与导出处理
 - `references/evaluation-cases.yaml` — 评测用例与预期护栏
+- `references/evaluation-protocol.md` — 独立执行者行为评测协议
+- `references/field-failure-patterns.md` — 真实部署中观察到的失败模式及检测方法（已匿名化）
+- `templates/decision-list.md` — 批量决策单与常设待确认台账模板
 - `templates/` — 来源清单与知识包大纲模板
 - `scripts/validate_knowledge.py` — JSON/JSONL 结构校验脚本
 - `agents/openai.yaml` — 界面元数据
@@ -47,3 +50,16 @@ records=9  errors=0  warnings=1   （与 JSONL 结果一致 — 已支持 YAML �
 负向测试（构造了缺失 `provenance`、重复 `record_id`、`proposed` 记录谎称 `high` 可信度的文件）正确失败：`errors=3, warnings=1`，退出码 1。
 
 `references/evaluation-cases.yaml` 中的七个用例全部被该示例演练，对应关系记录在示例的 README 中。
+
+## v1.1.0 更新
+
+以一次真实企业部署的经验加固（匿名化记录见 `references/field-failure-patterns.md`）：
+
+- 基线指定与静默覆盖禁令；被替代版本降级留痕、永不删除
+- 定级防虚高：来源自评只是主张；新增 `status_basis` 字段逐条记录定级依据；讨论类内容封顶
+- 批量决策单＋回写协议；常设待确认台账（open → decided → closed）
+- 敏感标记须穿透摘录与转换；导出前数值扫描作为放行闸门
+- 生成前登记表卫生闸门（100% 已定级、无元条目、无占位条目），校验脚本同步新增：重复条目报告、空条目/元条目检测、统一值启发式、`--scan-values` 扫描
+- 纠偏案例对（一错一正）作为正式条目类型；生成的技能包须自带「已知缺口」一节；评测采用独立执行者协议
+
+校验脚本对示例现同时报告 `rated_coverage=9/9`（其余默认输出不变：generic 为 errors=0、warnings=1；internal 为 errors=0、warnings=0）。构造的脏数据测试（占位条目、重复条目、元条目、全表同一状态、可导出条目中含未标记数值）正确失败：errors=1、warnings=7，退出码 1。

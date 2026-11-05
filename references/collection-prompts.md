@@ -44,3 +44,7 @@ Give every collector the same scope and privacy boundary. Do not ask one collect
 ## 6. Human checkpoints
 
 Pause for review after normalization and after reconciliation when any record is `restricted`, has conflicting effective periods, changes an approval state, or would be exported to a broader audience.
+
+## 7. Correction-case pairs (all collectors)
+
+Beyond definitions, actively collect **correction cases**: a wrong (or nonstandard) formulation paired with the corrected one, plus the reason. Examples of the genre: a metric quoted on the wrong basis (cumulative value used as a quarterly value), a deprecated term still in circulation, a plan written up as an accomplished result. Record each as a first-class record (`record_type: case`, domain `ai_correction`) — downstream, paired wrong→right examples teach expression rules more reliably than abstract style guidance.

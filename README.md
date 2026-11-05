@@ -12,6 +12,9 @@ A generic, reusable Skill for collecting organization-specific knowledge from mu
 - `references/reconciliation-and-conflicts.md` — deduplication and conflict rules
 - `references/privacy-and-redaction.md` — sensitivity levels and export handling
 - `references/evaluation-cases.yaml` — evaluation fixtures and expected safeguards
+- `references/evaluation-protocol.md` — behavior evaluation with an independent executor
+- `references/field-failure-patterns.md` — failure modes from a real deployment, with detection checks
+- `templates/decision-list.md` — batch decision list and persistent unresolved-items ledger
 - `templates/` — source inventory and knowledge-package outline
 - `scripts/validate_knowledge.py` — JSON/JSONL structural validator
 - `agents/openai.yaml` — UI metadata
@@ -51,6 +54,31 @@ records=9  errors=0  warnings=1   (identical to JSONL — YAML input supported, 
 Negative test (a file with a missing `provenance`, a duplicate `record_id`,
 and a `proposed` record claiming `high` confidence) correctly fails:
 `errors=3, warnings=1`, exit code 1.
+
+## What is new in v1.1.0
+
+Hardened with patterns from a real deployment (anonymized in
+`references/field-failure-patterns.md`):
+
+- baseline designation and a ban on silent overrides; superseded versions are
+  demoted and kept, never deleted
+- anti-inflation re-rating: a source's self-rating is a claim; `status_basis`
+  records why each rating was assigned; discussion content is capped
+- batch decision lists with a write-back protocol, and a persistent
+  unresolved-items ledger (open → decided → closed)
+- sensitivity-marker preservation across extraction, plus a pre-export value
+  scan as a release gate
+- a register hygiene gate before generation (100% re-rated, no meta-records,
+  no placeholder claims), enforced by new validator checks: duplicate-claim
+  report, empty/meta-record detection, uniformity heuristic, `--scan-values`
+- correction-case pairs as first-class records; packages ship a known-gaps
+  section; evaluation runs an independent-executor protocol
+
+Validator on the worked example now also reports `rated_coverage=9/9`
+(default outputs otherwise unchanged: generic `errors=0, warnings=1`;
+internal `errors=0, warnings=0`). A synthetic dirty register (placeholder
+claim, duplicate claim, meta-record, all-uniform statuses, an unmarked
+figure in an exportable record) fails with `errors=1, warnings=7`, exit 1.
 
 All seven cases in `references/evaluation-cases.yaml` are exercised by the
 worked example; the mapping is documented in the example's README.
