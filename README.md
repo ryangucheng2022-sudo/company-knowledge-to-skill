@@ -1,5 +1,7 @@
 # Company Knowledge to Skill
 
+English | [简体中文](README.zh-CN.md)
+
 A generic, reusable Skill for collecting organization-specific knowledge from multiple AI or human inputs, reconciling differences, applying privacy controls, generating a downstream Skill, and testing the result.
 
 ## Included
