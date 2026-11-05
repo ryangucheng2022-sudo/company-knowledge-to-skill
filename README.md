@@ -123,6 +123,8 @@ Negative test (a file with a missing `provenance`, a duplicate `record_id`,
 and a `proposed` record claiming `high` confidence) correctly fails:
 `errors=3, warnings=1`, exit code 1.
 
+**Consistency (drift) check.** The register is the source of truth and the package is a build artifact; `python3 scripts/check_consistency.py` verifies the package has not drifted from itself: no shipped file is left unmentioned in SKILL.md, every cited reference/template exists, and the worked example still passes the validator in both export modes. Current result: 0 errors, 0 warnings.
+
 ## What is new in v1.1.0
 
 Hardened with patterns from a real deployment (anonymized in

@@ -54,6 +54,7 @@ Read only the references needed for the current mode.
 - Deduplication, conflict handling, and review states: [references/reconciliation-and-conflicts.md](references/reconciliation-and-conflicts.md)
 - Privacy classification and export rules: [references/privacy-and-redaction.md](references/privacy-and-redaction.md)
 - Reusable templates for source inventory and knowledge outputs: [templates/](../templates/)
+  - Source inventory: `templates/source-inventory.yaml`; package outline: `templates/knowledge-package-outline.md`
 - Evaluation cases and expected safeguards: [references/evaluation-cases.yaml](references/evaluation-cases.yaml)
 - Behavior evaluation protocol (independent executor, citation-required): [references/evaluation-protocol.md](references/evaluation-protocol.md)
 - Failure patterns observed in a real deployment, with detection checks: [references/field-failure-patterns.md](references/field-failure-patterns.md)
