@@ -125,6 +125,10 @@ and a `proposed` record claiming `high` confidence) correctly fails:
 
 **Consistency (drift) check.** The register is the source of truth and the package is a build artifact; `python3 scripts/check_consistency.py` verifies the package has not drifted from itself: no shipped file is left unmentioned in SKILL.md, every cited reference/template exists, and the worked example still passes the validator in both export modes. Current result: 0 errors, 0 warnings.
 
+## CI
+
+A ready-to-enable GitHub Actions kit lives in `ci/`: copy `ci/ci.yml` to `.github/workflows/ci.yml`. It validates the worked example (both export modes, both input formats), runs the consistency check, and asserts that a deliberately dirty register is rejected.
+
 ## What is new in v1.1.0
 
 Hardened with patterns from a real deployment (anonymized in

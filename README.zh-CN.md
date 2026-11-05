@@ -122,6 +122,10 @@ records=9  errors=0  warnings=1   （与 JSONL 结果一致 — 已支持 YAML �
 
 **一致性（漂移）检查**：登记表是正本、技能包是构建产物；`python3 scripts/check_consistency.py` 校验包没有与自身脱节：已发布文件在 SKILL.md 中都有出处、引用的参考与模板都存在、演练示例在两种导出模式下仍通过校验器。当前结果：0 错误、0 警告。
 
+## 持续集成
+
+`ci/` 里备有 GitHub Actions 工具包：把 `ci/ci.yml` 复制到 `.github/workflows/ci.yml` 即可启用。内容为：演练示例双模式、双格式校验，一致性检查，以及故意弄脏的登记表必须被拒绝的负例断言。
+
 ## v1.1.0 更新
 
 以一次真实企业部署的经验加固（匿名化记录见 `references/field-failure-patterns.md`）：
